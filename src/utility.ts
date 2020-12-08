@@ -3,9 +3,7 @@ import fs from "promise-fs";
 export const mkDirIfDoesntExist = async (fileName: string) => {
   try {
     await fs.mkdir(fileName);
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 };
 
 export const doesFileExist = async (fileName: string) => {
