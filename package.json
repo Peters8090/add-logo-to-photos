@@ -20,6 +20,11 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@types/node": "^14.14.0"
+    "@types/node": "^14.14.0",
+    "@types/promise-fs": "^2.1.1",
+    "@types/rmfr": "^2.0.0",
+    "jimp": "^0.16.1",
+    "promise-fs": "^2.1.1",
+    "rmfr": "^2.0.0"
   }
 }
