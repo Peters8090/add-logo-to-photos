@@ -21,11 +21,16 @@ import { mkDirIfDoesntExist } from "./utility";
   for (const photoFileName of inputPhotos) {
     const photo = await jimp.read(`${PHOTOS_INPUT_DIR}/${photoFileName}`);
 
-    const changedPhoto = await photo.composite(logo, 0, 0, {
+    logo.resize(photo.bitmap.width, jimp.AUTO);
+
+    const X = photo.bitmap.width / 2 - logo.bitmap.width / 2;
+    const Y = photo.bitmap.height / 2 - logo.bitmap.height / 2;
+
+    const changedPhoto = await photo.composite(logo, X, Y, {
       mode: jimp.BLEND_SOURCE_OVER,
       opacityDest: 1,
-      opacitySource: 0.5,
+      opacitySource: 0.75,
     });
     changedPhoto.writeAsync(`${PHOTOS_OUTPUT_DIR}/${photoFileName}`);
   }
-})();
+})().then(() => console.log("gotowe"));
