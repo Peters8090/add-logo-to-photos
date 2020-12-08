@@ -8,13 +8,17 @@ import { mkDirIfDoesntExist } from "./utility";
   const PHOTOS_OUTPUT_DIR = "z logo";
   const LOGO_DIR = "logo.png";
 
-  const LOGO_MARGIN_PERCENTAGE = 5;
-
   await rmfr(PHOTOS_OUTPUT_DIR);
   await mkDirIfDoesntExist(PHOTOS_INPUT_DIR);
   await mkDirIfDoesntExist(PHOTOS_OUTPUT_DIR);
 
   const inputPhotos = await fs.readdir(PHOTOS_INPUT_DIR);
+
+  try {
+    await fs.readFile(LOGO_DIR);
+  } catch (e) {
+    return;
+  }
 
   const logo = await jimp.read(LOGO_DIR);
 
@@ -33,4 +37,4 @@ import { mkDirIfDoesntExist } from "./utility";
     });
     changedPhoto.writeAsync(`${PHOTOS_OUTPUT_DIR}/${photoFileName}`);
   }
-})().then(() => console.log("gotowe"));
+})();
