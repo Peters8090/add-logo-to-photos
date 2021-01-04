@@ -2,6 +2,8 @@ bez logo
 z logo
 logo.png
 
+.DS_STORE
+
 # Logs
 logs
 *.log

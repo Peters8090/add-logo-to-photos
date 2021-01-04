@@ -23,18 +23,22 @@ import { mkDirIfDoesntExist } from "./utility";
   const logo = await jimp.read(LOGO_DIR);
 
   for (const photoFileName of inputPhotos) {
-    const photo = await jimp.read(`${PHOTOS_INPUT_DIR}/${photoFileName}`);
+    try {
+      const photo = await jimp.read(`${PHOTOS_INPUT_DIR}/${photoFileName}`);
 
-    logo.resize(photo.bitmap.width, jimp.AUTO);
+      logo.resize(photo.bitmap.width, jimp.AUTO);
 
-    const X = photo.bitmap.width / 2 - logo.bitmap.width / 2;
-    const Y = photo.bitmap.height / 2 - logo.bitmap.height / 2;
+      const X = photo.bitmap.width / 2 - logo.bitmap.width / 2;
+      const Y = photo.bitmap.height / 2 - logo.bitmap.height / 2;
 
-    const changedPhoto = await photo.composite(logo, X, Y, {
-      mode: jimp.BLEND_SOURCE_OVER,
-      opacityDest: 1,
-      opacitySource: 0.75,
-    });
-    changedPhoto.writeAsync(`${PHOTOS_OUTPUT_DIR}/${photoFileName}`);
+      const changedPhoto = await photo.composite(logo, X, Y, {
+        mode: jimp.BLEND_SOURCE_OVER,
+        opacityDest: 1,
+        opacitySource: 0.75,
+      });
+      changedPhoto.writeAsync(`${PHOTOS_OUTPUT_DIR}/${photoFileName}`);
+    } catch (e) {
+      console.log(`Adding logo to ${photoFileName} failed.`);
+    }
   }
 })();
